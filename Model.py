@@ -106,7 +106,7 @@ class BILSTM_withAttention2layer(nn.Module):
         att = self.atten1(out1,h_n).unsqueeze(1)
 
         for i in range(out1.shape[1]-2,-1,-1):
-          att = torch.cat((self.atten1(out1,out1[:,i,:]).unsqueeze(1),att),1)
+          att = torch.cat((self.atten1(out1[:,:i,:],out1[:,i,:]).unsqueeze(1),att),1)
         
         out2, (h_n,c_n) = self.lstm2(att)
 
@@ -116,4 +116,3 @@ class BILSTM_withAttention2layer(nn.Module):
         return out
 
 if __name__ == "__main__":
-    
